@@ -15,7 +15,7 @@ function catalogo() {
             var contador = 0
             var numPagina = 1
             productos.map(function (producto) {
-                $('<div id="' + producto.idproductos + '" class="col-lg-4 col-sm-6 portfolio-item pagina' + numPagina + '"><div class="card h-100"><a href="producto.html?' + producto.idproductos + '"><img class="card-img-top" src="imgs/' + producto.imagen + '" alt=""></a><div class="card-body"><h4 class="card-title"><a href="producto.html?' + producto.idproductos + '" class="nombre">' + producto.nombre + '</a></h4><p class="card-text" class="descripcion">' + producto.descripcion + '</p><p class="card-text precio">Precio: ' + producto.precio + ' colones</p></div></div></div>').appendTo('#catalogoContainer');
+                $('<div id="' + producto.idproductos + '" class="col-lg-4 col-sm-6 portfolio-item pagina' + numPagina + '"><div class="card h-100"><a href="producto.html?' + producto.idproductos + '"><img class="card-img-top" src="imgs/' + producto.imagen + '" alt=""></a><div class="card-body"><h4 class="card-title"><a href="producto.html?' + producto.idproductos + '" class="nombre">' + producto.nombre + '</a></h4><p class="card-text" class="descripcion">' + producto.descripcion + '</p><p class="card-text precio umana">Precio: ₡' + producto.precio + '</p></div></div></div>').appendTo('#catalogoContainer');
 
                 if (producto.precioOferta) {
 
@@ -45,7 +45,7 @@ function catalogo() {
             $('#catalogoContainer').show()
             var totalPaginas = Math.ceil(productos.length / 6)
             for (var i = 1; i <= totalPaginas; i++) {
-                $(' <li class="page-item"><a class="page-link" onclick="paginacion(' + i + ')">' + i + '</a></li>').appendTo('.pagination')
+                $(' <li style="padding:5px;" class="page-item "><a style="font-size:25px; padding:10px;" class="page-link pagination1" onclick="paginacion(' + i + ')">' + i + '</a></li>').appendTo('.pagination')
             }
         }
     })
@@ -69,7 +69,7 @@ function traerProducto(id) {
             $('#imagen').attr('src', 'imgs/' + producto.imagen)
             $('#nombre').text(producto.nombre)
             $('#descripcion').text(producto.descripcion)
-            $('#marca').append(producto.marca)
+            $('#categoria').append(producto.categoria)
             $('#modelo').append(producto.modelo)
             $('#precio').append("₡ " + producto.precio + " colones i.v.i")
             var caracteristicas = producto.caracteristicas.split(';')
@@ -130,12 +130,17 @@ function traerCategorias() {
         },
         success: function (categoria_response) {
             var categorias = JSON.parse(categoria_response);
+            var categoria = JSON.parse(categoria_response);
+
             categorias.map(function (categoria) {
                 $('<option value="' + categoria.idcategoria + '">' + categoria.nombre + '</option>').appendTo('#categoria');
             })
+
         }
     })
 }
+
+
 //registrar Producto
 $("form#producto").submit(function (e) {
     e.preventDefault();
@@ -208,6 +213,15 @@ function traerProductoEditar(id) {
             console.log(xhr.statusText)
         },
         success: function (producto_response) {
+            const traerCategorias = async () => {
+                const res = await fetch('../php/categoria.php?metodo=listar')
+                const json = await res.json();
+                json.map(function (e) {
+                    $('<option value="' + e.idcategoria + '">' + e.nombre + '</option>').appendTo('#categoria');
+                })
+                $('select[name="categoria"]').val(producto.idCategoria);
+            }
+            traerCategorias();
             var producto = JSON.parse(producto_response);
             $('input[name="nombre"]').val(producto.nombre);
             $('input[name="descripcion"]').val(producto.descripcion);
@@ -303,7 +317,7 @@ function construirCarrito() {
           <p class="modelo"><b>Modelo: </b>` + producto.modelo + ` </p>
           <h6 class="precio"><b>Precio: ₡<b> </h6>
           <label><b>Cantidad:<b></label>
-          <input  type="number" value="1" onchange="calcularCantidad()">
+          <input  type="number" min="0" value="1" onchange="calcularCantidad()" name="cantidad">
         </div>
       </div> `).appendTo('#productosContainer')
 
@@ -341,7 +355,6 @@ function calcularCantidad(elemento) {
 
         var cantidad = parseInt($(this).find('input').val());
         total += parseInt($(this).find('.precio').text().replace(/[^\d]/g, '')) * cantidad
-
     })
 
     $('#total label span').text(total);
@@ -350,19 +363,21 @@ function calcularCantidad(elemento) {
 }
 
 function procesarPedido() {
-
     var pedido = {};
     pedido.idUsuarios = JSON.parse(sessionStorage.getItem('usuarioLogueado')).idUsuarios;
     pedido.total = $('#total label span').text();
     var idproductos = [];
+    var cantidadProductos = [];
     $('.producto').each(function () {
-
+        cantidadProductos.push($(this).find('input[name="cantidad"]').val())
         idproductos.push($(this).attr('id'))
     });
 
     pedido.idproductos = idproductos;
+    pedido.cantidad = cantidadProductos;
     pedido.fecha = new Date();
-
+    //alert(JSON.stringify(pedido))
+    
     $.ajax({
         url: "../php/pedido.php",
         method: "POST",
@@ -371,24 +386,24 @@ function procesarPedido() {
             console.log(xhr.statusText)
         },
         success: function (pedido_response) {
-            alert(pedido_response);
-            window.location.href = "catalogo.html";
+            alertify.alert("<strong>Su pedido a sido procesado con exito!!</strong> <br> Se enviara un correo electronico cuando su pedido este listo. <br> Para más informacion contactese al 2546-6522");
+            
         }
     })
+    
 
 }
 
 function listarPedidos() {
 
-    var productos = JSON.parse(sessionStorage.getItem("carrito"));
 
-    var producto = {
+    var pedido = {
         metodo: "listar" 
     }
     $.ajax({
-        url: "../php/pedido.php",
+        url: "../php/pedido.php", 
         method: "POST",
-        data: producto,
+        data: pedido,
         error: function (xhr) {
             console.log(xhr.statusText);
         },
@@ -398,7 +413,7 @@ function listarPedidos() {
                 var tr = document.createElement('tr');
 
                 var nombre = document.createElement('td');
-                $(nombre).text(e.idUsuarios);
+                $(nombre).text(e.nombre);
                 $(tr).append(nombre);
 
                 var fecha = document.createElement('td');
@@ -409,16 +424,21 @@ function listarPedidos() {
                 $(total).text(e.total);
                 $(tr).append(total);
                 
-                $('<td class="table__icons"><a class="block" onclick="borrarProducto(' + e.idPedidos + ')"><i class="fas fa-trash fa-lg rojo"></i></a></td>').appendTo(tr);
+                $('<td class="table__icons"><a class="block" onclick="borrarPedido('+e.idPedidos+')"><i class="fas fa-trash fa-lg rojo"></i></a></td>').appendTo(tr);
+                
+                $('<td class="table__icons"><a class="block" href="detallepedido.html?'+e.idPedidos+'"><i class="fas fa-bars fa-lg verde"></i></a></td>').appendTo(tr);
+                
                 $('#listarPedidos').append(tr);
             })
         }
     });
 }
 
-function borrarProducto(id){
-    if(confirm("¿Estas seguro que desea borrar al producto?")){
-        var borrar ={
+
+
+function borrarProducto(id) {
+    if (confirm("¿Estas seguro que desea borrar al producto?")) {
+        var borrar = {
             id: id,
             metodo: "borrar"
         }
@@ -426,7 +446,28 @@ function borrarProducto(id){
             url: "../php/producto.php",
             data: borrar,
             method: 'POST',
-            error: function(xhr){
+            error: function (xhr) {
+                alert("An error ocurred: " + xhr.status + " " + xhr.statusText);
+            },
+            success: function (respuesta) {
+
+                location.reload();
+            }
+        });
+    }
+}
+
+function borrarPedido(idPedido) {
+    if (confirm("¿Estas seguro que desea borrar al producto?")) {
+        var borrar = {
+            metodo: "borrar",
+            id: idPedido
+        }
+        $.ajax({
+            url: "../php/pedido.php",
+            data: borrar,
+            method: 'POST',
+            error: function (xhr) {
                 alert("An error ocurred: " + xhr.status + " " + xhr.statusText);
             },
             success: function (respuesta) {
@@ -436,5 +477,16 @@ function borrarProducto(id){
         });
     }
 }
+
+function borrarcarrito(){
+    sessionStorage.removeItem('carrito');
+    alertify.confirm("Esta seguro que desea eliminar su pedido?");
+    window.setTimeout('location.reload()', 4000);
+}
+
+
+
+
+
 
 
