@@ -9,7 +9,7 @@ p {
 }
 
 a {
-  color: #fed136;
+  color: #fed136; 
 }
 
 a:hover {
@@ -51,7 +51,7 @@ section h3.section-subheading {
 
 @media (min-width: 768px) {
   section {
-    padding: 110px 0;
+    padding: 50px 0;
   }
 }
 
@@ -651,8 +651,8 @@ header.masthead-1 .intro-text .intro-heading {
 }
 
 section#contact {
-  background-color: #212529;
-  background-image: url("../img/map-image.png");
+ 
+  background-image: url("../img/Fondos/foter.jpg");
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -710,6 +710,7 @@ section#contact :-ms-input-placeholder {
 }
 
 footer {
+    background-color: #212529;
   padding: 25px 0;
   text-align: center;
 }
@@ -719,6 +720,7 @@ footer span.copyright {
   line-height: 40px;
   text-transform: none;
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #fed136;
 }
 
 footer ul.quicklinks {
@@ -745,7 +747,7 @@ ul.social-buttons li a {
   color: white;
   border-radius: 100%;
   outline: none;
-  background-color: #212529;
+  background-color: #fed136;
 }
 
 ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons li a:hover {
@@ -769,7 +771,9 @@ ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons l
 }
 
 .green{
-  color:lightgreen;
+  color:green;
+  font-weight: bold;
+    
 }
 
 .oldPrice{
@@ -809,3 +813,20 @@ ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons l
 
   margin-bottom: 10px;
 }
+
+
+.isaac>div{
+    padding: 10px;
+    
+}
+
+.isaac>div>div{
+    padding: 5px;
+    text-align: center;
+}
+
+.umana{
+    font-size: 25px;
+    text-decoration: underline;
+}
+

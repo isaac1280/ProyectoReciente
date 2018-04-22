@@ -4,13 +4,30 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-logomodern-business-nav/blob/master/LICENSE)
  */
 
-
-
-
 .rojo{
   color: red;
 }
 
+
+.rojo12{
+  color: black;
+    
+}
+.rojo1{
+    color: white;
+    background-color: red;
+    margin-left: 5px;
+}
+.rojo1:hover{
+    color: white;
+    background-color: firebrick;
+    margin-left: 5px;
+}
+
+.espacio{
+
+    margin-left: 5px;
+}
 
 
 ul.pagination li a{
@@ -41,3 +58,10 @@ ul.pagination li a{
 #total h3{
   margin: .5em;
 }
+
+
+
+
+
+
+
