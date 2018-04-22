@@ -96,5 +96,3 @@ else{
 $conn->close();
 ?>
 
-
-///PREUBA
