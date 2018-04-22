@@ -486,6 +486,45 @@ function borrarcarrito(){
 
 
 
+function DetallePedidos(id) {
+
+    var pedido = {
+        metodo: "detalle",
+        idPedidos: id
+    }
+    $.ajax({
+        url: "../php/pedido.php", 
+        method: "POST",
+        data: pedido,
+        error: function (xhr) {
+            console.log(xhr.statusText);
+        },
+        success: function (producto_response) {
+            var productos = JSON.parse(producto_response);
+            productos.map(function (e) {
+                var tr = document.createElement('tr');
+                
+                var cantidad = document.createElement('td');
+                $(cantidad).text(e.cantidad);
+                $(tr).append(cantidad);
+
+                var nombre = document.createElement('td');
+                $(nombre).text(e.nombre);
+                $(tr).append(nombre);
+        
+                
+                var fecha = document.createElement('td');
+                $(fecha).text(e.precio);
+                $(tr).append(fecha); 
+                
+
+                $('#listarPedidos').append(tr);
+            })
+        }
+    });
+}
+
+
 
 
 
