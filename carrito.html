@@ -8,11 +8,15 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Agency - Start Bootstrap Theme</title>
+    <title>Koko Diseños</title>
+    
+    <link rel="stylesheet" href="css/alertify.core.css">
+    <link rel="stylesheet" href="css/alertify.default.css">
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/fontawesome/css/fontawesome-all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/img/fav.png" />
 
     <!-- Custom fonts for this template -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -22,7 +26,8 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
 
     <!-- Custom styles for this template -->
-    <link href="css/agency.min.css" rel="stylesheet">
+    <link href="css/agency.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/modern-business.css">
 
   </head>
 
@@ -45,7 +50,7 @@
                         <a class="nav-link" href="catalogo.html">Productos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="galeria.html">Galería</a>
+                        <a class="nav-link " href="galeria.html">Diseños</a>
                     </li>
                     <li class="nav-item" id="botonLogin">
                         <a class="nav-link" href="login.html" id="login">Login</a>
@@ -87,9 +92,10 @@
       <div id="total">
 
         <label class="green">Total: ₡ <span></span></label>
-        <br>
-        <button class="btn btn-warning btn3" onclick="procesarPedido()">Hacer Pedido</button>
-        <br>
+
+        <button class="btn btn-warning btn3 espacio" onclick="procesarPedido()">Hacer Pedido</button>
+
+        <button class="btn btn-warning btn3 rojo12" onclick="borrarcarrito()">Borrar Pedido</button>
       </div>
     </div>
     
@@ -135,6 +141,7 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/agency.min.js"></script>
+    <script src="js/alertify.min.js"></script>
     <script src="js/producto_controller.js"></script>
     <script src="js/carrito.js"></script>
     

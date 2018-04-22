@@ -8,11 +8,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Agency - Start Bootstrap Theme</title>
+    <title>Koko Diseños</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/fontawesome/css/fontawesome-all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/img/fav.png" />
 
     <!-- Custom fonts for this template -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -22,7 +23,7 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
 
     <!-- Custom styles for this template -->
-    <link href="css/agency.min.css" rel="stylesheet">
+    <link href="css/agency.css" rel="stylesheet">
 
   </head>
 
@@ -93,7 +94,7 @@
         <div class="col-lg-8 mb-4">
           <h3>Ingrese la información para registrar un producto</h3>
           <p>Los campos marcados (*) son requeridos</p>
-          <form  id="producto" method="post" enctype="multipart/form-data">
+<form  id="producto" method="post" enctype="multipart/form-data">
             <div class="control-group form-group">
               <div class="controls">
                 <label>Nombre de Producto:</label><span class="rojo">*</span>
@@ -107,7 +108,13 @@
                 <input type="text" class="form-control" name="descripcion" required >
               </div>
             </div>
-
+            <div class="control-group form-group">
+              <div class="controls">
+                <label>Modelo:</label><span class="rojo">*</span>
+                <input type="text" class="form-control" name="modelo" required >
+                <p class="help-block"></p>
+              </div>
+            </div>
             <div class="control-group form-group">
                 <div class="controls">
                   <label>Marca:</label><span class="rojo">*</span>
@@ -115,6 +122,13 @@
                   <p class="help-block"></p>
                 </div>
               </div>
+            <div class="control-group form-group">
+              <div class="controls">
+                <label>Categoría:</label><span class="rojo">*</span>
+                <select id="categoria" name="categoria">
+                </select>
+              </div>
+            </div>
             <div class="control-group form-group">
               <div class="controls">
                 <label>Precio:</label><span class="rojo">*</span>
